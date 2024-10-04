@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class= "row row-cols-1 row-cols-md-3 g-4">
+        {% for menu in menus %}
+        <div v-for="menu in menus" class="col">
+            <div class="card">
+                <a href="{% url 'detail' menu.id %}"> 
+                    <img class="card-img-top" src="{{ menu.imagen.url}}"/>
+                        <div class ="card-body">
+                            <h5 class="card-title fw-bold">{{ menu.title }}</h5>
+                        </div>
+                </a> 
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

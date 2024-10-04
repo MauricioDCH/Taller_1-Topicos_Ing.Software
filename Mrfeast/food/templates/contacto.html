@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="contenedor sombra">
+    <h2>¿Tienes dudas sobre Mr Feast?</h2>
+    <form method="post">  <!-- Cambiado a 'post' para enviar datos -->
+        {% csrf_token %}  <!-- Protege contra ataques CSRF -->
+        <fieldset>
+            <div class="mb-3">
+                <label class="form-label" for="{{ form.nombre.id_for_label }}">Nombre</label>
+                <input type="text" class="form-control" id="{{ form.nombre.id_for_label }}" name="nombre" value="{{ form.nombre.value|default_if_none:'' }}" required>
+                {% if form.nombre.errors %}
+                    <div class="text-danger">{{ form.nombre.errors }}</div>  <!-- Mensaje de error -->
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="{{ form.telefono.id_for_label }}">Teléfono</label>
+                <input type="text" class="form-control" id="{{ form.telefono.id_for_label }}" name="telefono" value="{{ form.telefono.value|default_if_none:'' }}" required>
+                {% if form.telefono.errors %}
+                    <div class="text-danger">{{ form.telefono.errors }}</div>  <!-- Mensaje de error -->
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="{{ form.email.id_for_label }}">Email</label>
+                <input type="email" class="form-control" id="{{ form.email.id_for_label }}" name="email" value="{{ form.email.value|default_if_none:'' }}" required>
+                {% if form.email.errors %}
+                    <div class="text-danger">{{ form.email.errors }}</div>  <!-- Mensaje de error -->
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="{{ form.mensaje.id_for_label }}">Mensaje</label>
+                <textarea class="form-control" id="{{ form.mensaje.id_for_label }}" name="mensaje" required>{{ form.mensaje.value|default_if_none:'' }}</textarea>
+                {% if form.mensaje.errors %}
+                    <div class="text-danger">{{ form.mensaje.errors }}</div>  <!-- Mensaje de error -->
+                {% endif %}
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </fieldset>    
+    </form>
+</section>
+{% endblock content %}

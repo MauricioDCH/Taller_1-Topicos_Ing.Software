@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Añadir Reseña para {{ menu.title }}</h2>
+    <form method="post" id="review-form">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="text">{{ form.text.label }}</label>
+            {{ form.text }}
+        </div>
+        
+        <div class="form-group">
+            <label for="favorito">{{ form.favorito.label }}</label>
+            {{ form.favorito }}
+        </div>
+
+        <div class="form-group">
+            <label>Calificación:</label>
+            <div id="rating-buttons">
+                <button type="button" class="rating-btn" data-value="1">1</button>
+                <button type="button" class="rating-btn" data-value="2">2</button>
+                <button type="button" class="rating-btn" data-value="3">3</button>
+                <button type="button" class="rating-btn" data-value="4">4</button>
+                <button type="button" class="rating-btn" data-value="5">5</button>
+            </div>
+            <input type="hidden" name="calificacion" id="calificacion" value="">
+        </div>
+    </br>
+        <button type="submit" class="btn btn-primary">Enviar Reseña</button>
+    </form>
+</div>
+
+<script>
+    // Script para manejar la selección de calificación
+    const ratingButtons = document.querySelectorAll('.rating-btn');
+    const calificacionInput = document.getElementById('calificacion');
+
+    ratingButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Remover la clase activa de todos los botones
+            ratingButtons.forEach(btn => btn.classList.remove('active'));
+            // Añadir clase activa al botón seleccionado
+            button.classList.add('active');
+            // Establecer el valor en el campo oculto
+            calificacionInput.value = button.getAttribute('data-value');
+        });
+    });
+</script>
+
+<style>
+    /* Estilo básico para los botones de calificación */
+    #rating-buttons {
+        display: flex;
+        gap: 10px;
+    }
+    .rating-btn {
+        padding: 10px 20px;
+        border: 1px solid #007bff;
+        background-color: white;
+        color: #007bff;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .rating-btn.active {
+        background-color: #007bff;
+        color: white;
+    }
+</style>
+{% endblock content %}

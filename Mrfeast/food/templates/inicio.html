@@ -1,0 +1,302 @@
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Información sobre Mr. Feast</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap">
+        
+
+    <style>
+        form {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+    }
+
+        input[type="submit"] {
+            background-color: 	#000000; 
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease; 
+    }
+
+        input[type="submit"]:hover {
+            background-color: #ffffff; 
+    }
+    
+
+        body {
+            font-family: 'Dancing Script', cursive;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+
+        }
+        
+        
+        .cursiva {
+        font-style: italic;
+        }
+
+        .info-container {
+            padding: 20px;
+            background-color: 	#FEF8F8;
+            text-align: center;
+        }
+
+        .carousel-container {
+        width: 100%;
+        overflow: hidden;
+        }
+
+        .carousel-wrapper {
+        display: flex;
+        width: 300%; 
+        transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-item {
+        width: 100vw; 
+        height: 100vh; 
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        }
+        .carousel-item h2 {
+        font-size: 20px; 
+        font-weight: 500; 
+        }
+        .carousel-item h2 {
+        margin: 10px; 
+        }
+        .carousel-item h2 {
+        margin: 10px; 
+}
+
+
+        .arrow {
+        font-size: 24px;
+        cursor: pointer;
+        }
+
+        .arrow-left {
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        transform: translateY(-50%);
+        }
+
+        .arrow-right {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        }
+        .menu-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+        .menu {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+            padding: 20px;
+            width: 350px;
+            text-align: center;
+        }
+        .menu h2 {
+            margin-top: 0;
+            font-size: 24px;
+        }
+        .menu p {
+            font-size: 16px;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            color: #000000;
+            text-decoration: none;
+        }
+
+        section {
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        #hero {
+            background-color: #f2f2f2;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .feature {
+            max-width: 300px;
+            margin: 0 auto 30px;
+        }
+        
+        .footer {
+            max-width: 350px;
+            margin: 0 auto 310px;
+        }
+
+        #hero h2 {
+            color: #333;
+        }
+
+        #download {
+            background-color: #333;
+            color: #fff;
+        }
+
+        #download .download-links a {
+            display: inline-block;
+            background-color: #fff;
+            color: #333;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 0 10px;
+        }
+    </style>
+    </head>
+    <body>
+    <section class="info-container">
+        {%load static %}
+        <h2 class="cursiva"><img src="{% static 'images/logo.jpg' %}" alt="" width="250" height="250" class="d-inline-block align-text-top"></h2>
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="#features">Características</a></li>
+                    <li><a href="#contact">Contacto</a></li>
+                </ul>
+            </nav>
+        </header>
+    </section>
+    <div class="carousel-container">
+        <div class="carousel-wrapper">  
+        <div class="carousel-item" style="background-color: #82C0A4;">
+            <div class="menu-container">
+                <section id="hero">
+                    <div class="hero-content">
+                        <h1>Bienvenido a MrFeast</h1>
+                        <p>La mejor aplicación web para cuidar tu salud.</p>
+                        <p>Organiza tus tiempos</p>
+                        <p>y mejora tu calidad de vida.</p>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'portal'%}" class="btn">Ver mis Menús</a>
+                        {% else %}
+                            <a href="{% url 'login'%}" class="btn">Log In</a>
+                            <a href="{% url 'register'%}" class="btn">Register</a>
+                        {% endif %}
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div class="carousel-item" style="background-color: #B2DFB9;">
+            <h1>Aún estamos en construcción...</h1>
+        </div>
+        
+        </div>
+
+        <div class="arrow arrow-left">&#9665;</div>
+        <div class="arrow arrow-right">&#9655;</div>
+    </div>
+
+    <script>
+        const carouselWrapper = document.querySelector('.carousel-wrapper');
+        const arrowLeft = document.querySelector('.arrow-left');
+        const arrowRight = document.querySelector('.arrow-right');
+        
+        let currentIndex = 0;
+
+        arrowLeft.addEventListener('click', () => {
+        if (currentIndex > 0) {
+            currentIndex--;
+            updateCarousel();
+        }
+        });
+
+        arrowRight.addEventListener('click', () => {
+        
+        if (currentIndex < 1) {
+            currentIndex++;
+            updateCarousel();
+        }
+        });
+
+        function updateCarousel() {
+        const itemWidth = document.querySelector('.carousel-item').offsetWidth;
+        const newPosition = -currentIndex * itemWidth;
+        carouselWrapper.style.transform = `translateX(${newPosition}px)`;
+        }
+    </script>
+
+    <section id="features">
+        <div class="feature">
+            <h3>Beneficios</h3>
+            <p> Ofrece menús personalizados y diarios que se adaptan a las necesidades de salud individuales, considerando alergias, enfermedades, edad y preferencias alimentarias.</p>
+        </div>
+        <div class="feature">
+            <h3>Futuro</h3>
+            <p>Existe la posibilidad de expandir la base de datos de alimentos y recetas para proporcionar opciones más variadas y personalizadas.</p>
+        </div>
+        <div class="feature">
+            <h3>Sobre Nosotros</h3>
+            <p>Somos parte del equipo MrFeast y queremos lograr que en tu vida se vea una mejoría con nuestra página web que cuenta con una IA entrenada por los mejores nutriólogos, la cual permitirá que puedas seleccionar lo que no te gusta, tus alergias, enfermedades o incluso problemas de peso tanto si eres mujer u hombre.  </p>
+        </div>
+        <div class="feature">
+            <div class="text-center p-4">
+                <h3>Contacto</h3>
+                <p>Email: mrfeast@gmail.com</p>
+                <p>Teléfono: +123456789</p>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="copyright py-4 text-center text-white footer">
+            <div class="container">
+                    &copy; 2024 |
+                    <a class="text-reset fw-bold text-decoration-none" target="_blank" href="https://github.com/MauricioDCH">
+                    Mauricio Correa
+                    </a> -
+                    <a class="text-reset fw-bold text-decoration-none" target="_blank" href="https://github.com/cortegons">
+                    Camilo Ortegon
+                    </a>
+            </div>
+        </div>
+    </footer>
+</body>
+    </html>
+

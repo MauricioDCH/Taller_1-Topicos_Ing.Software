@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .custom-img {
+        max-width: 200px; /* Ajusta el valor según sea necesario */
+        height: auto; /* Mantiene la relación de aspecto */
+    }
+    .
+</style>
+<div class="container">
+    <h2>Resultados de Búsqueda</h2>
+    {% if resultados %}
+        <ul class="list-group">
+            {% for resultado in resultados %}
+                <li class="list-group-item">
+                    <!-- Usar la clase personalizada para controlar el tamaño de la imagen -->
+                    <div class="card-body">
+                        <img src="{{ resultado.imagen.url }}" class="card-img-top custom-img" alt="{{ resultado.title }}">
+                        <h5 class="card-title">
+                            <a href="{% url 'detail' resultado.pk %}" class="text-decoration-none">
+                                {{ resultado.title }}
+                            </a>
+                        </h5>
+                    </div>
+                </li><br>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No se encontraron resultados para "{{ request.GET.busqueda }}".</p>
+    {% endif %}
+</div>
+{% endblock content %}
