@@ -1,0 +1,10 @@
+#!/bin/sh
+'''exec' /home/mdch/Documents/01._Ingeniería_de_Sistemas-EAFIT/04._SEM/06._S6-2024.02/03.Top_IngSoft/05.Talleres/Taller_1/Repo-Taller_1/Taller_1-Topicos_Ing.Software/venv/bin/python "$0" "$@"
+' '''
+# -*- coding: utf-8 -*-
+import re
+import sys
+from rsa.cli import decrypt
+if __name__ == '__main__':
+    sys.argv[0] = re.sub(r'(-script\.pyw|\.exe)?$', '', sys.argv[0])
+    sys.exit(decrypt())

@@ -1,0 +1,4 @@
+google-generativeai
+markdown2
+django
+Pillow
