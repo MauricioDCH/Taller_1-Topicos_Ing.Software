@@ -1,20 +1,19 @@
+import markdown2
+import time
+import google.generativeai as genai
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.views import View
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, TemplateView
-from django.http import HttpResponse
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, TemplateView, DeleteView
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
-from django.urls import reverse
+from django.core.mail import send_mail
 
 from .models import Menu, Review
 from .forms import ReviewForm, ContactoForm
-from django.core.mail import send_mail
-import markdown2
-import time
-import google.generativeai as genai
-from django.contrib import messages
 from .generators import OpenAITextGenerator, GeminiTextGenerator
 import random
 
@@ -202,6 +201,15 @@ class MenuDetailView(DetailView):
         
         return context
 
+class BuscarView(View):
+    def get(self, request):
+        busqueda = request.GET.get('busqueda')
+        resultados = Menu.objects.filter(title__icontains=busqueda)
+
+"""
+#############################################################
+## ANTES DE HACER EL PATRÓN VISTAS CRUD DE RESEÑAS
+#############################################################
 
 @method_decorator(login_required, name='dispatch')
 class CreateReviewView(View):
@@ -249,9 +257,55 @@ class DeleteReviewView(View):
         review = get_object_or_404(Review, pk=review_id, user=request.user)
         review.delete()
         return redirect('detail', review.menu.id)
-
-class BuscarView(View):
-    def get(self, request):
-        busqueda = request.GET.get('busqueda')
-        resultados = Menu.objects.filter(title__icontains=busqueda)  # Cambia 'nombre' por 'title'
         return render(request, 'busqueda.html', {'resultados': resultados})
+
+#############################################################
+"""
+
+#############################################################
+## DESPUES DE HACER EL PATRÓN VISTAS CRUD DE RESEÑAS
+#############################################################
+
+@method_decorator(login_required, name='dispatch')
+class CreateReviewView(CreateView):
+    model = Review
+    form_class = ReviewForm
+    template_name = 'createreview.html'
+
+    def form_valid(self, form):
+        # Vinculamos el usuario y el menú a la reseña antes de guardarla
+        menu = get_object_or_404(Menu, pk=self.kwargs['menu_id'])
+        form.instance.user = self.request.user
+        form.instance.menu = menu
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        # Redirige al detalle del menú después de crear la reseña
+        return reverse_lazy('detail', kwargs={'pk': self.kwargs['menu_id']})
+
+@method_decorator(login_required, name='dispatch')
+class UpdateReviewView(UpdateView):
+    model = Review
+    form_class = ReviewForm
+    template_name = 'updatereview.html'
+
+    def get_queryset(self):
+        # Aseguramos que solo el usuario que creó la reseña puede editarla
+        return Review.objects.filter(user=self.request.user)
+
+    def get_success_url(self):
+        # Redirige al detalle del menú después de actualizar la reseña
+        return reverse_lazy('detail', kwargs={'pk': self.object.menu.id})
+
+@method_decorator(login_required, name='dispatch')
+class DeleteReviewView(DeleteView):
+    model = Review
+    template_name = 'deletereviewconfirm.html'  # Asegúrate de tener esta plantilla
+
+    def get_success_url(self):
+        # Obtiene la reseña que se está eliminando
+        review = self.get_object()
+        # Obtiene el menú asociado a la reseña
+        menu_id = review.menu.id  # Cambia 'menu' por el nombre del campo en tu modelo Review
+        # Redirige a la vista de detalle del menú
+        return reverse('detail', args=[menu_id])
