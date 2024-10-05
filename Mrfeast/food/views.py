@@ -16,6 +16,7 @@ from .models import Menu, Review
 from .forms import ReviewForm, ContactoForm
 from .generators import OpenAITextGenerator, GeminiTextGenerator
 import random
+from .factories import UserFactory, ReviewFactory
 
 class LoginView(View):
     def get(self, request):
@@ -66,6 +67,21 @@ class InicioView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['mensaje_bienvenida'] = "¡Bienvenido a nuestra aplicación!"
         return context
+
+
+
+
+def create_user_and_review(request):
+    # Usar la fábrica para crear un nuevo usuario
+    user_factory = UserFactory()
+    new_user = user_factory.create_instance(username="test2", name="John Doe", age=30, weight=70, height=175)
+
+    # Usar la fábrica para crear una nueva reseña
+    menu = Menu.objects.get(id=2)  # Obtén un menú existente
+    review_factory = ReviewFactory()
+    new_review = review_factory.create_instance(user=new_user, menu=menu, text="Great menu!", favorito=True, calificacion=5)
+
+    return render(request, 'test_template.html', {'new_user': new_user, 'new_review': new_review})
 
 
 class ContactoView(TemplateView):

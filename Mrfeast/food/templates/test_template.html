@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuario y Reseña Creada</title>
+</head>
+<body>
+    <h1>Reseña Creada Exitosamente</h1>
+
+    <!-- Detalles del Usuario -->
+    <section>
+        <h2>Detalles del Usuario</h2>
+        <p><strong>Nombre de usuario:</strong> {{ new_user.username }}</p>
+        <p><strong>Nombre completo:</strong> {{ new_user.name }}</p>
+        <p><strong>Edad:</strong> {{ new_user.age }}</p>
+        <p><strong>Peso:</strong> {{ new_user.weight }} kg</p>
+        <p><strong>Altura:</strong> {{ new_user.height }} cm</p>
+    </section>
+
+    <!-- Detalles de la Reseña -->
+    <section>
+        <h2>Detalles de la Reseña</h2>
+        <p><strong>Menú:</strong> {{ new_review.menu.title }}</p>
+        <p><strong>Comentario:</strong> {{ new_review.text }}</p>
+        <p><strong>Favorito:</strong> {{ new_review.favorito|yesno:"Sí,No" }}</p>
+        <p><strong>Calificación:</strong> {{ new_review.calificacion }} / 5</p>
+    </section>
+
+    <!-- Enlace para volver al menú -->
+    <a href="{% url 'menu_detail' new_review.menu.id %}">Volver al Menú</a>
+</body>
+</html>

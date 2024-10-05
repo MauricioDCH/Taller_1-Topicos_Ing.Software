@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import PortalView, MenuDetailView, CreateReviewView, UpdateReviewView, DeleteReviewView, BuscarView
+from .views import PortalView, MenuDetailView, CreateReviewView, UpdateReviewView, DeleteReviewView, BuscarView, create_user_and_review
 
 urlpatterns = [
     path('', PortalView.as_view(), name='portal'),
@@ -8,5 +8,6 @@ urlpatterns = [
     path('menu/create/<int:menu_id>/', CreateReviewView.as_view(), name='createreview'),
     path('review/update/<int:pk>/', UpdateReviewView.as_view(), name='updatereview'),
     path('review/delete/<int:pk>/', DeleteReviewView.as_view(), name='deletereview'),
+    path('create-review/', create_user_and_review, name='create_user_and_review'),
 
 ]
