@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <h2>Confirmar eliminación</h2>
+    
+    <p>¿Estás seguro de que deseas eliminar esta reseña?</p>
+    
+    <div>
+      <strong>Reseña:</strong>
+      <p>{{ review.text }}</p>  <!-- Asegúrate de que 'text' es un campo en tu modelo Review -->
+
+      <strong>Menú:</strong>
+      <p>{{ review.menu.name }}</p>  <!-- 'menu.name' es un ejemplo; ajusta según los campos de tu modelo -->
+    </div>
+    
+    <form method="POST">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Eliminar</button>
+      <a href="{% url 'detail' review.menu.id %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+  </div>
+{% endblock %}
