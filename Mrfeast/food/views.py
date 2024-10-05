@@ -1,21 +1,19 @@
+import markdown2
+import time
+import google.generativeai as genai
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, TemplateView, DeleteView
-from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
-from django.urls import reverse
-from django.urls import reverse_lazy
+from django.core.mail import send_mail
 
 from .models import Menu, Review
 from .forms import ReviewForm, ContactoForm
-from django.core.mail import send_mail
-import markdown2
-import time
-import google.generativeai as genai
-from django.contrib import messages
 
 
 class LoginView(View):
