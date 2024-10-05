@@ -71,17 +71,20 @@ class InicioView(TemplateView):
 
 
 
-def create_user_and_review(request):
-    # Usar la fábrica para crear un nuevo usuario
-    user_factory = UserFactory()
-    new_user = user_factory.create_instance(username="test2", name="John Doe", age=30, weight=70, height=175)
+class CreateUserAndReviewView(View):
+    template_name = 'test_template.html'
 
-    # Usar la fábrica para crear una nueva reseña
-    menu = Menu.objects.get(id=2)  # Obtén un menú existente
-    review_factory = ReviewFactory()
-    new_review = review_factory.create_instance(user=new_user, menu=menu, text="Great menu!", favorito=True, calificacion=5)
+    def get(self, request, *args, **kwargs):
+        # Usar la fábrica para crear un nuevo usuario
+        user_factory = UserFactory()
+        new_user = user_factory.create_instance(username="johndoe", name="John Doe", age=30, weight=70, height=175)
 
-    return render(request, 'test_template.html', {'new_user': new_user, 'new_review': new_review})
+        # Usar la fábrica para crear una nueva reseña
+        menu = get_object_or_404(Menu, id=2)  # Obtén un menú existente
+        review_factory = ReviewFactory()
+        new_review = review_factory.create_instance(user=new_user, menu=menu, text="Great menu!", favorito=True, calificacion=5)
+
+        return render(request, self.template_name, {'new_user': new_user, 'new_review': new_review})
 
 
 class ContactoView(TemplateView):
