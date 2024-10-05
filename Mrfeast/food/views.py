@@ -15,7 +15,8 @@ import markdown2
 import time
 import google.generativeai as genai
 from django.contrib import messages
-
+from .generators import OpenAITextGenerator, GeminiTextGenerator
+import random
 
 class LoginView(View):
     def get(self, request):
@@ -93,7 +94,7 @@ class ContactoView(TemplateView):
             )
             return render(request, 'gracias.html')  # Puedes redirigir a una página de agradecimiento
         return render(request, self.template_name, {'form': form})
-
+"""
 class GenerarView(View):
     def get(self, request):
         genai.configure(api_key="AIzaSyAWOVQpKOtCnjGq22aXznUPJdyn2Upk7iE")
@@ -157,7 +158,30 @@ class GenerarView(View):
                 response = f"Se produjo un error inesperado: {e}"
 
         return render(request, 'generar.html', {'generateMenu': generateMenu, 'respuesta': response, 'mensaje': mensaje})
+"""
 
+
+class GenerarView(View):
+    def get(self, request):
+        response = ""
+        generateMenu = ""
+        mensaje = ""
+        
+        randomnumber = random.randint(0, 1)
+        print(randomnumber)
+
+        if request.GET.get("generateMenu"):
+            # Crear instancias de los generadores de texto
+            if randomnumber == 1:
+                gemini_generator = GeminiTextGenerator()
+                generateMenu = gemini_generator.generate_content(request.GET.get("generateMenu"))
+                response = generateMenu
+            else:
+                openai_generator = OpenAITextGenerator()
+                generateMenu = openai_generator.generate_content(request.GET.get("generateMenu"))
+                response = generateMenu
+        
+        return render(request, 'generar.html', {'generateMenu': generateMenu, 'respuesta': response, 'mensaje': mensaje})
 
 class MenuDetailView(DetailView):
     model = Menu

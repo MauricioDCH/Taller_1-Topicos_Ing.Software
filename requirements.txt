@@ -2,3 +2,4 @@ google-generativeai
 markdown2
 django
 Pillow
+openai==0.28.0
