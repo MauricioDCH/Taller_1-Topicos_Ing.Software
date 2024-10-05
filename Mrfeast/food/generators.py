@@ -28,7 +28,7 @@ class TextGenerationInterface(ABC):
 # Implementación de la interfaz usando OpenAI
 class OpenAITextGenerator(TextGenerationInterface):
     def __init__(self):
-        openai.api_key = "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"  
+        openai.api_key = "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"  
     
     def preparar_mensajes(self, prompt: str) -> list:
         """Prepara los mensajes que se enviarán a la API."""
